@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">Lost Found STIS</string>
+    <string name="tab_text_1">Pencarian</string>
+    <string name="tab_text_2">Penemuan</string>
+
+    <string name="detail_pencarian">Detail Pencarian</string>
+    <string name="detail_penemuan">Detail Penemuan</string>
+
+    <string name="openDrawer">Drawer dibuka</string>
+    <string name="closeDrawer">Drawer ditutup</string>
+
+    <string name="navItem1">Profil Saya</string>
+    <string name="navItem2">Pencarian Saya</string>
+    <string name="navItem3">Peraturan</string>
+    <string name="navItem4">Tentang Aplikasi</string>
+    <string name="navItem5">Logout</string>
+
+    <string name="judul_pencarian">Judul Pencarian</string>
+    <string name="judul_penemuan">Judul Penemuan</string>
+    <string name="jenis_barang">Jenis Barang</string>
+    <string name="lokasi_hilang">Lokasi Hilang</string>
+    <string name="waktu_hilang">Waktu Hilang</string>
+    <string name="cir_bar">Ciri Barang Hilang</string>
+
+    <string-array name="list_kelompok_barang">
+        <item>Alat Tulis</item>
+        <item>Alat Eletktronik</item>
+        <item>Atribut Seragam</item>
+        <item>Barang Berharga</item>
+        <item>Barang Pribadi</item>
+        <item>Pakaian</item>
+    </string-array>
+
+    <string-array name="list_gedung_kampus">
+        <item>Gedung 1</item>
+        <item>Gedung 2</item>
+        <item>Gedung 3</item>
+        <item>Auditorium</item>
+        <item>Basement</item>
+        <item>Halaman</item>
+        <item>Kantin</item>
+    </string-array>
+
+    <string-array name="list_sesi">
+        <item>Sesi 1</item>
+        <item>Sesi 2</item>
+        <item>ISHOMA</item>
+        <item>Sesi 3</item>
+        <item>Sesi 4</item>
+        <item>Sesi Malam</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single"
+        android:orderInCategory="1"
+        android:id="@+id/navAtas">
+        <item
+            android:id="@+id/navProfilSaya"
+            android:checked="false"
+            android:icon="@drawable/ic_profil_saya"
+            android:title="@string/navItem1" />
+        <item
+            android:id="@+id/navPencarianSaya"
+            android:checked="false"
+            android:icon="@drawable/ic_pencarian_saya"
+            android:title="@string/navItem2" />
+        <item
+            android:id="@+id/navPengaturan"
+            android:checked="false"
+            android:icon="@drawable/ic_pengaturan"
+            android:title="@string/navItem3" />
+    </group>
+
+    <group
+        android:checkableBehavior="single"
+        android:orderInCategory="2"
+        android:id="@+id/navBawah">
+        <item
+            android:id="@+id/navTentang"
+            android:checked="false"
+            android:icon="@drawable/ic_about"
+            android:title="@string/navItem4"/>
+        <item
+            android:id="@+id/navLogout"
+            android:checked="false"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/navItem5"/>
+    </group>
+
+    <!--<item
+        android:id="@+id/navigasi_kategori_2"
+        android:title="@string/navigasi_kategori_2">
+        <menu>
+            <item
+                android:id="@+id/nav_setting"
+                android:checked="false"
+                android:icon="@drawable/ic_setting"
+                android:title="@string/navigation_view_item_4" />
+            <item
+                android:id="@+id/nav_about"
+                android:checked="false"
+                android:icon="@drawable/ic_about"
+                android:title="@string/navigation_view_item_5" />
+        </menu>
+    </item>-->
+
+</menu>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="warnaUtama">#187bcd</color>
+    <color name="warnaUtamaGelap">#1167b1</color>
+    <color name="warnaAccent">#022d36</color>
+    <color name="warnaBackground">#d0efff</color>
+    <color name="warnaNavigation">#1167b1</color>
+</resources>

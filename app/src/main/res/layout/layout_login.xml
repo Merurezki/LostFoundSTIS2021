@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LoginActivity"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/bglogo"
+        android:layout_marginTop="20dp"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login User"
+        android:textSize="26sp"
+        android:layout_below="@id/bglogo"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView"
+        tools:ignore="HardcodedText" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="NIM / NIP"
+        android:inputType="number"
+        app:met_baseColor="#2e8ece"
+        app:met_primaryColor="#fc1e94"
+        app:met_errorColor="#f22a37"
+        app:met_floatingLabel="highlight"
+        app:met_iconLeft="@drawable/ic_account"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="70dp"
+        android:id="@+id/logtxtUserId"
+        tools:ignore="HardcodedText" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:met_baseColor="#2e8ece"
+        app:met_primaryColor="#fc1e94"
+        app:met_errorColor="#f22a37"
+        app:met_floatingLabel="highlight"
+        app:met_iconLeft="@drawable/ic_password"
+        android:layout_below="@id/logtxtUserId"
+        android:layout_marginTop="1dp"
+        android:id="@+id/logtxtPassword"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logtxtPassword"
+        android:layout_marginTop="10dp"
+        android:background="@color/warnaUtama"
+        android:elevation="5dp"
+        android:text="Login"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:id="@+id/logbtnLogin"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
