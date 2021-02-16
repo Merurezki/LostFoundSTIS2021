@@ -1,5 +1,6 @@
 package com.skripsi.lostfoundstis
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,12 +15,14 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.skripsi.lostfoundstis.adapter.RecycleAdapter
+import com.skripsi.lostfoundstis.util.Configuration
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "DEPRECATION")
 class Penemuan : Fragment() {
 
     private var recyView: RecyclerView? = null
@@ -27,14 +30,15 @@ class Penemuan : Fragment() {
     private var stringRequest: StringRequest? = null
     private val config: Configuration = Configuration()
     private var listTemu = ArrayList<HashMap<String, String>>()
+    private var rootView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.penemuan, container, false)
-        recyView = rootView.findViewById(R.id.recTemu)
+        rootView = inflater.inflate(R.layout.penemuan, container, false)
+        recyView = rootView?.findViewById(R.id.recTemu)
 
         recyView?.addOnItemTouchListener(object : OnItemTouchListener {
             var gestureDetector = GestureDetector(
@@ -72,6 +76,12 @@ class Penemuan : Fragment() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recyView?.layoutManager = llm
 
+        showPenemuan()
+
+        return rootView
+    }
+
+    private fun showPenemuan(){
         requestQueue = Volley.newRequestQueue(context)
         listTemu = ArrayList()
         stringRequest = StringRequest(
@@ -97,7 +107,7 @@ class Penemuan : Fragment() {
                                 config.TAG_TEMU_TGL)
                         map[config.TAG_TEMU_FOTO] = json.getString(config.TAG_TEMU_FOTO)
                         listTemu.add(map)
-                        val adapter = PenemuanAdapter(activity as MainActivity, listTemu)
+                        val adapter = RecycleAdapter(activity as Context, listTemu)
                         recyView?.adapter = adapter
                     }
                 } catch (e: JSONException) {
@@ -106,6 +116,17 @@ class Penemuan : Fragment() {
             }
         ) { error -> Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
-    return rootView
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if(isVisible){
+            val v = rootView
+            if (v == null){
+                Toast.makeText(activity, "ERROR", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
     }
 }

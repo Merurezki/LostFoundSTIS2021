@@ -1,5 +1,6 @@
 package com.skripsi.lostfoundstis
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,12 +16,14 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.skripsi.lostfoundstis.adapter.RecycleAdapter
+import com.skripsi.lostfoundstis.util.Configuration
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "DEPRECATION")
 class Pencarian : Fragment() {
 
     private var recyView: RecyclerView? = null
@@ -28,14 +31,16 @@ class Pencarian : Fragment() {
     private var stringRequest: StringRequest? = null
     private val config: Configuration = Configuration()
     private var listCari = ArrayList<HashMap<String, String>>()
+    private var rootView: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.pencarian, container, false)
-        recyView = rootView.findViewById(R.id.recCari)
+
+        rootView = inflater.inflate(R.layout.pencarian, container, false)
+        recyView = rootView?.findViewById(R.id.recCari)
 
         recyView?.addOnItemTouchListener(object : OnItemTouchListener {
             var gestureDetector = GestureDetector(
@@ -73,6 +78,18 @@ class Pencarian : Fragment() {
         llm.orientation = LinearLayoutManager.VERTICAL
         recyView?.layoutManager = llm
 
+        showPencarian()
+
+        val fab: FloatingActionButton? = rootView?.findViewById(R.id.fabCari)
+        fab?.setOnClickListener {
+            val i = Intent(requireContext(), TambahPencarian::class.java)
+            startActivity(i)
+        }
+
+        return rootView
+    }
+
+    private fun showPencarian(){
         requestQueue = Volley.newRequestQueue(context)
         listCari = ArrayList()
         stringRequest = StringRequest(
@@ -100,7 +117,7 @@ class Pencarian : Fragment() {
                                 config.TAG_CARI_TGL)
                         map[config.TAG_CARI_FOTO] = json.getString(config.TAG_CARI_FOTO)
                         listCari.add(map)
-                        val adapter = PencarianAdapter(activity as MainActivity, listCari)
+                        val adapter = RecycleAdapter(activity as Context, listCari)
                         recyView?.adapter = adapter
                     }
                 } catch (e: JSONException) {
@@ -109,15 +126,17 @@ class Pencarian : Fragment() {
             }
         ) { error -> Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
+    }
 
-        val fab: FloatingActionButton = rootView.findViewById(R.id.fabCari)
-        fab.setOnClickListener {
-            val i = Intent(requireContext(), TambahPencarian::class.java)
-            startActivity(i)
-            /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()*/
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if(isVisible){
+            val v = rootView
+            if (v == null){
+                Toast.makeText(activity, "ERROR", Toast.LENGTH_SHORT).show()
+                return
+            }
         }
-
-    return rootView
     }
 }

@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.skripsi.lostfoundstis.util.Configuration
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -51,13 +52,12 @@ class DetailPenemuan : AppCompatActivity() {
         val intent = intent
         idTemu = intent.getStringExtra(config.TEMU_ID)
 
-        imgFoto = findViewById(R.id.fbr_dtemu)
-        txtJdl = findViewById(R.id.jdl_dtemu)
-        txtJbr = findViewById(R.id.jbr_dtemu)
-        txtLok = findViewById(R.id.lok_dtemu)
-        txtWkt = findViewById(R.id.wkt_dtemu)
-        txtCir = findViewById(R.id.cir_dtemu)
+        setupView()
+        showDetailPenemuan()
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun showDetailPenemuan(){
         requestQueue = Volley.newRequestQueue(this)
         stringRequest = StringRequest(
             Request.Method.GET, config.URL_GET_ONE_TEMU + idTemu,
@@ -91,5 +91,14 @@ class DetailPenemuan : AppCompatActivity() {
             }
         ) { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
+    }
+
+    private fun setupView(){
+        imgFoto = findViewById(R.id.fbr_dtemu)
+        txtJdl = findViewById(R.id.jdl_dtemu)
+        txtJbr = findViewById(R.id.jbr_dtemu)
+        txtLok = findViewById(R.id.lok_dtemu)
+        txtWkt = findViewById(R.id.wkt_dtemu)
+        txtCir = findViewById(R.id.cir_dtemu)
     }
 }

@@ -17,6 +17,9 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.skripsi.lostfoundstis.adapter.RecycleAdapter
+import com.skripsi.lostfoundstis.util.Configuration
+import com.skripsi.lostfoundstis.util.SessionManager
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -38,10 +41,11 @@ class MyPencarian : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.my_pencarian)
 
-        // Membuat tombol navigasi kembali ke halaman sebelumnya
+        // mendapatkan user id dari login session
         sessionManager = SessionManager(applicationContext)
         idUser = sessionManager?.getUserId
 
+        // membuat tombol navigasi kembali ke halaman sebelumnya
         val toolbar: Toolbar? = findViewById(R.id.toolbarMyPencarian)
         setSupportActionBar(toolbar)
 
@@ -55,42 +59,16 @@ class MyPencarian : AppCompatActivity() {
         // Menampilkan daftar / list pencarian saya
         recyView = findViewById(R.id.recMyCari)
 
-        recyView?.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-            var gestureDetector = GestureDetector(
-                this@MyPencarian,
-                object : GestureDetector.SimpleOnGestureListener() {
-                    override fun onSingleTapUp(e: MotionEvent): Boolean {
-                        return true
-                    }
-                })
-
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                val child = rv.findChildViewUnder(e.x, e.y)
-                if (child != null && gestureDetector.onTouchEvent(e)) {
-                    val position = rv.getChildAdapterPosition(child)
-                    val intentCari = Intent(this@MyPencarian, DetailMyPencarian::class.java)
-                    val map: HashMap<String, String> = listMyCari[position]
-                    val myCariId = map[config.TAG_CARI_ID]
-                    intentCari.putExtra(config.CARI_ID, myCariId)
-                    startActivity(intentCari)
-
-                    Toast.makeText(
-                        this@MyPencarian,
-                        "membuka detail pencarian saya",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                return false
-            }
-
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-        })
-
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyView?.layoutManager = llm
 
+        showMyPencarian()
+
+        listTouch()
+    }
+
+    private fun showMyPencarian(){
         requestQueue = Volley.newRequestQueue(this)
         listMyCari = ArrayList()
         stringRequest = StringRequest(
@@ -118,7 +96,7 @@ class MyPencarian : AppCompatActivity() {
                                 config.TAG_CARI_TGL)
                         map[config.TAG_CARI_FOTO] = json.getString(config.TAG_CARI_FOTO)
                         listMyCari.add(map)
-                        val adapter = MyPencarianAdapter(this, listMyCari)
+                        val adapter = RecycleAdapter(this, listMyCari)
                         recyView?.adapter = adapter
                     }
                 } catch (e: JSONException) {
@@ -127,5 +105,41 @@ class MyPencarian : AppCompatActivity() {
             }
         ) { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
+    }
+
+    private fun listTouch(){
+        recyView?.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            var gestureDetector = GestureDetector(
+                this@MyPencarian,
+                object : GestureDetector.SimpleOnGestureListener() {
+                    override fun onSingleTapUp(e: MotionEvent): Boolean {
+                        return true
+                    }
+                })
+
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                val child = rv.findChildViewUnder(e.x, e.y)
+                if (child != null && gestureDetector.onTouchEvent(e)) {
+                    val position = rv.getChildAdapterPosition(child)
+                    val intentCari = Intent(this@MyPencarian, DetailMyPencarian::class.java)
+                    val map: HashMap<String, String> = listMyCari[position]
+                    val myCariId = map[config.TAG_CARI_ID]
+                    intentCari.putExtra(config.CARI_ID, myCariId)
+                    overridePendingTransition(0,0)
+                    startActivity(intentCari)
+                    overridePendingTransition(0,0)
+
+                    Toast.makeText(
+                        this@MyPencarian,
+                        "membuka detail pencarian saya",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
     }
 }

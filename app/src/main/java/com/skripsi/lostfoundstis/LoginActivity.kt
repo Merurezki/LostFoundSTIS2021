@@ -14,6 +14,8 @@ import com.androidquery.AQuery
 import com.androidquery.callback.AjaxCallback
 import com.androidquery.callback.AjaxStatus
 import com.rengwuxian.materialedittext.MaterialEditText
+import com.skripsi.lostfoundstis.util.Configuration
+import com.skripsi.lostfoundstis.util.SessionManager
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -115,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
         logbtnLogin = findViewById(R.id.logbtnLogin)
     }
 
-    fun pesan(c: Context?, msg: String?) {
+    private fun pesan(c: Context?, msg: String?) {
         Toast.makeText(c, msg, Toast.LENGTH_LONG).show()
     }
 

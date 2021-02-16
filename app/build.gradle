@@ -51,4 +51,5 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'net.gotev:uploadservice:2.1'
 }

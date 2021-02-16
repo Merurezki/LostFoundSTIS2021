@@ -17,7 +17,9 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import com.skripsi.lostfoundstis.ui.main.SectionsPagerAdapter
+import com.skripsi.lostfoundstis.adapter.SectionsPagerAdapter
+import com.skripsi.lostfoundstis.util.Configuration
+import com.skripsi.lostfoundstis.util.SessionManager
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -58,8 +60,7 @@ class MainActivity : AppCompatActivity() {
             mDrawerLayout!!.closeDrawers()
             when (menuItem.itemId) {
                 R.id.navProfilSaya -> {
-                    Toast.makeText(applicationContext, "Ini Menu Profil Saya", Toast.LENGTH_SHORT)
-                        .show()
+                    startActivity(Intent(applicationContext, MyProfile::class.java))
                     true
                 }
                 R.id.navPencarianSaya -> {
@@ -72,13 +73,12 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navTentang -> {
-                    Toast.makeText(applicationContext, "Ini Menu Pengaturan", Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, "Ini Menu Tentang Aplikasi", Toast.LENGTH_SHORT)
                         .show()
                     true
                 }
                 R.id.navLogout -> {
-                    sessionManager?.logout()
-                    finish()
+                    dialogLogout()
                     true
                 }
                 else -> {
@@ -107,30 +107,66 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                idUser  = sessionManager?.getUserId
-                requestQueue = Volley.newRequestQueue(applicationContext)
-                stringRequest = StringRequest(
-                    Request.Method.GET, config.URL_GET_PROFIL + idUser,
-                    { response ->
-                        Log.d("response ", response!!)
-                        try {
-                            val jsonObject = JSONObject(response)
-                            val jsonArray = jsonObject.getJSONArray(config.TAG_PROFIL_JSON)
-                            for (a in 0 until jsonArray.length()) {
-                                val json = jsonArray.getJSONObject(a)
-                                txtNama?.text = json.getString(config.TAG_NAMA_USER)
-                                txtNim?.text = sessionManager?.getUserId
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-                    }
-                ) { error -> Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show() }
-                requestQueue?.add(stringRequest)
+                showHeader()
                 invalidateOptionsMenu()
             }
         }
         mDrawerLayout?.setDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+    }
+
+    private fun dialogLogout() {
+        val alertDialogBuilder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(
+            this
+        )
+
+        // set title dialog
+        alertDialogBuilder.setTitle("Ingin logout dari aplikasi?")
+
+        // set pesan dari dialog
+        alertDialogBuilder
+            .setMessage("Klik Ya untuk logout dari aplikasi")
+            .setIcon(R.mipmap.ic_launcher)
+            .setCancelable(false)
+            .setPositiveButton(
+                "Ya"
+            ) { _, _ ->
+                sessionManager?.logout()
+                finish()
+            }
+            .setNegativeButton(
+                "Tidak"
+            ) { dialog, _ ->
+                dialog.cancel()
+            }
+
+        // membuat alert dialog dari builder
+        val alertDialog: android.app.AlertDialog? = alertDialogBuilder.create()
+
+        // menampilkan alert dialog
+        alertDialog?.show()
+    }
+
+    private fun showHeader(){
+        idUser  = sessionManager?.getUserId
+        requestQueue = Volley.newRequestQueue(applicationContext)
+        stringRequest = StringRequest(
+            Request.Method.GET, config.URL_GET_PROFIL + idUser,
+            { response ->
+                Log.d("response ", response!!)
+                try {
+                    val jsonObject = JSONObject(response)
+                    val jsonArray = jsonObject.getJSONArray(config.TAG_PROFIL_JSON)
+                    for (a in 0 until jsonArray.length()) {
+                        val json = jsonArray.getJSONObject(a)
+                        txtNama?.text = json.getString(config.TAG_NAMA_USER)
+                        txtNim?.text = sessionManager?.getUserId
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }
+        ) { error -> Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show() }
+        requestQueue?.add(stringRequest)
     }
 }

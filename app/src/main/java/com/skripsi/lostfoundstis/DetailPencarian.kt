@@ -15,11 +15,12 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.skripsi.lostfoundstis.util.Configuration
 import org.json.JSONException
 import org.json.JSONObject
 
 
-@Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNREACHABLE_CODE")
 class DetailPencarian : AppCompatActivity() {
     private var requestQueue: RequestQueue? = null
     private var stringRequest: StringRequest? = null
@@ -51,13 +52,13 @@ class DetailPencarian : AppCompatActivity() {
         val intent = intent
         idCari = intent.getStringExtra(config.CARI_ID)
 
-        imgFoto = findViewById(R.id.fbr_dcari)
-        txtJdl = findViewById(R.id.jdl_dcari)
-        txtJbr = findViewById(R.id.jbr_dcari)
-        txtLok = findViewById(R.id.lok_dcari)
-        txtWkt = findViewById(R.id.wkt_dcari)
-        txtCir = findViewById(R.id.cir_dcari)
+        setuView()
 
+        showDetialPencarian()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showDetialPencarian(){
         requestQueue = Volley.newRequestQueue(this)
         stringRequest = StringRequest(
             Request.Method.GET, config.URL_GET_ONE_CARI + idCari,
@@ -91,5 +92,14 @@ class DetailPencarian : AppCompatActivity() {
             }
         ) { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
+    }
+
+    private fun setuView(){
+        imgFoto = findViewById(R.id.fbr_dcari)
+        txtJdl = findViewById(R.id.jdl_dcari)
+        txtJbr = findViewById(R.id.jbr_dcari)
+        txtLok = findViewById(R.id.lok_dcari)
+        txtWkt = findViewById(R.id.wkt_dcari)
+        txtCir = findViewById(R.id.cir_dcari)
     }
 }

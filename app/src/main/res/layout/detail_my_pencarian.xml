@@ -81,7 +81,7 @@
                 android:text="@string/lokasi_hilang" />
 
             <TextView
-                android:id="@+id/wkt_dmycari"
+                android:id="@+id/wkt_edit_spin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -91,7 +91,7 @@
                 android:text="@string/waktu_hilang" />
 
             <TextView
-                android:id="@+id/cir_dmycari"
+                android:id="@+id/cir_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -112,7 +112,8 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="5dp"
                     android:background="#82ff69"
-                    android:text="EDIT" />
+                    android:text="EDIT"
+                    tools:ignore="ButtonStyle,HardcodedText" />
 
                 <Button
                     android:id="@+id/btnHapus"
@@ -121,7 +122,8 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="5dp"
                     android:background="#ff8269"
-                    android:text="HAPUS" />
+                    android:text="HAPUS"
+                    tools:ignore="ButtonStyle,HardcodedText" />
 
                 <Button
                     android:id="@+id/btnSelesai"
@@ -130,7 +132,8 @@
                     android:layout_weight="1"
                     android:layout_marginHorizontal="5dp"
                     android:background="#7da6ff"
-                    android:text="SELESAI" />
+                    android:text="SELESAI"
+                    tools:ignore="ButtonStyle,HardcodedText" />
             </LinearLayout>
 
         </LinearLayout>

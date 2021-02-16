@@ -1,6 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MyProfile"
+
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarMyProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:title="Profil Saya"
+            app:titleTextColor="#ffffff" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Nama :"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/nama_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="NIM / NIP :"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/nimnip_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Status :"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/status_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Email :"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/email_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="4dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="Telepon :"
+                tools:ignore="HardcodedText" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/telepon_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:maxLength="14"
+                android:inputType="number"/>
+
+            <Button
+                android:id="@+id/btnEditTlp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@color/warnaUtama"
+                android:text="Update\nTelepon"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
+import com.skripsi.lostfoundstis.util.Configuration
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -58,13 +59,39 @@ class DetailMyPencarian : AppCompatActivity(), View.OnClickListener {
         val intent = intent
         idMyCari = intent.getStringExtra(config.CARI_ID)
 
-        imgFoto = findViewById(R.id.fbr_dmycari)
-        txtJdl = findViewById(R.id.jdl_dmycari)
-        txtJbr = findViewById(R.id.jbr_dmycari)
-        txtLok = findViewById(R.id.lok_dmycari)
-        txtWkt = findViewById(R.id.wkt_dmycari)
-        txtCir = findViewById(R.id.cir_dmycari)
+        setupView()
 
+        showMyPencarian()
+
+        btnEdit?.setOnClickListener(this)
+        btnHapus?.setOnClickListener { dialogHapus() }
+        btnSelesai?.setOnClickListener { dialogSelesai() }
+    }
+
+    override fun onClick(view: View) {
+        // Mendapatkan Semua ID yang Terdapat pada Masing-masing Widget
+        when (view.id) {
+            R.id.btnEdit -> {
+                val i = Intent(this, EditDetailMyPencarian::class.java)
+                i.putExtra(config.TAG_CARI_ID, idMyCari)
+                startActivityForResult(i,1)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK && requestCode == 1){
+            if(data?.hasExtra(config.TAG_CARI_ID) == true){
+                idMyCari = data.getStringExtra(config.TAG_CARI_ID)
+                showMyPencarian()
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showMyPencarian(){
         requestQueue = Volley.newRequestQueue(this)
         stringRequest = StringRequest(
             Request.Method.GET, config.URL_GET_ONE_CARI + idMyCari,
@@ -78,12 +105,10 @@ class DetailMyPencarian : AppCompatActivity(), View.OnClickListener {
                         txtJdl?.text = json.getString(config.TAG_CARI_JDL)
                         txtJbr?.text =
                             json.getString(config.TAG_CARI_KEL) + ", " + json.getString(
-                                config.TAG_CARI_KAT
-                            )
+                                config.TAG_CARI_KAT)
                         txtLok?.text =
                             json.getString(config.TAG_CARI_GD) + ", " + json.getString(
-                                config.TAG_CARI_RG
-                            )
+                                config.TAG_CARI_RG)
                         txtWkt?.text =
                             json.getString(config.TAG_CARI_WKT) + ", " + json.getString(
                                 config.TAG_CARI_TGL)
@@ -101,25 +126,6 @@ class DetailMyPencarian : AppCompatActivity(), View.OnClickListener {
             }
         ) { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
         requestQueue?.add(stringRequest)
-
-        btnEdit = findViewById(R.id.btnEdit)
-        btnHapus = findViewById(R.id.btnHapus)
-        btnSelesai= findViewById(R.id.btnSelesai)
-
-        btnEdit?.setOnClickListener(this)
-        btnHapus?.setOnClickListener { dialogHapus() }
-        btnSelesai?.setOnClickListener { dialogSelesai() }
-    }
-
-    override fun onClick(view: View) {
-        // Mendapatkan Semua ID yang Terdapat pada Masing-masing Widget
-        when (view.id) {
-            R.id.btnEdit -> {
-                val i = Intent(this, EditDetailMyPencarian::class.java)
-                i.putExtra(config.TAG_CARI_ID, idMyCari)
-                startActivity(i)
-            }
-        }
     }
 
     private fun dialogHapus() {
@@ -226,5 +232,18 @@ class DetailMyPencarian : AppCompatActivity(), View.OnClickListener {
 
         // menampilkan alert dialog
         alertDialog?.show()
+    }
+
+    private fun setupView(){
+        imgFoto = findViewById(R.id.fbr_dmycari)
+        txtJdl = findViewById(R.id.jdl_dmycari)
+        txtJbr = findViewById(R.id.jbr_dmycari)
+        txtLok = findViewById(R.id.lok_dmycari)
+        txtWkt = findViewById(R.id.wkt_edit_spin)
+        txtCir = findViewById(R.id.cir_edit)
+
+        btnEdit = findViewById(R.id.btnEdit)
+        btnHapus = findViewById(R.id.btnHapus)
+        btnSelesai= findViewById(R.id.btnSelesai)
     }
 }

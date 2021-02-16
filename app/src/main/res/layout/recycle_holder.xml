@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/fbr_holder"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                tools:srcCompat="@tools:sample/avatars"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:orientation="vertical"
+                tools:ignore="InefficientWeight">
+
+                <TextView
+                    android:id="@+id/jdl_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/judul_pencarian"
+                    android:textSize="14sp"
+                    android:maxLength="30"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceListItem" />
+
+                <TextView
+                    android:id="@+id/jbr_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/jenis_barang"
+                    android:textSize="11sp"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/lok_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/lokasi_hilang"
+                    android:textSize="11sp"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/wkt_holder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/waktu_hilang"
+                    android:textSize="11sp"
+                    android:textAppearance="?attr/textAppearanceListItem"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

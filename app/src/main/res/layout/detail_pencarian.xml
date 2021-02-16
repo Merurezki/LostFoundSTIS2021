@@ -19,7 +19,7 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:title="@string/detail_pencarian"
+            app:title="Detail Pencarian"
             app:titleTextColor="#ffffff" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -37,8 +37,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            tools:context=".DetailPencarian">
+            android:paddingBottom="16dp" >
 
             <ImageView
                 android:id="@+id/fbr_dcari"
