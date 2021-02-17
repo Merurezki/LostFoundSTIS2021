@@ -80,7 +80,7 @@ class DetailPenemuan : AppCompatActivity() {
                         txtCir?.text = json.getString(config.TAG_TEMU_CIRI)
                         imgFoto?.let {
                             Glide.with(applicationContext)
-                                .load(config.URL_IMG_LOC + json.getString(config.TAG_TEMU_FOTO))
+                                .load(config.URL_IMG_LOC_TEMU + json.getString(config.TAG_TEMU_FOTO))
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(it)
                         }

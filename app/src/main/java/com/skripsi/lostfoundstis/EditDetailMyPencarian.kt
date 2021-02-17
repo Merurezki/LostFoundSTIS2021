@@ -2,16 +2,23 @@
 
 package com.skripsi.lostfoundstis
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
@@ -22,19 +29,30 @@ import com.androidquery.callback.AjaxStatus
 import com.bumptech.glide.Glide
 import com.rengwuxian.materialedittext.MaterialEditText
 import com.skripsi.lostfoundstis.util.Configuration
+import net.gotev.uploadservice.MultipartUploadRequest
+import net.gotev.uploadservice.UploadNotificationConfig
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.IOException
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-@Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@Suppress(
+    "DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
+    "ControlFlowWithEmptyBody", "PrivatePropertyName", "SameParameterValue"
+)
 class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
     View.OnClickListener {
     private var config : Configuration = Configuration()
     private var aQuery: AQuery? = null
     private var idMyCari: String? = null
+
+    private val PICK_IMAGE_REQUEST = 1
+    private val STORAGE_PERMISSION_CODE = 123
+    private var bitmap: Bitmap? = null
+    private var filePath: Uri? = null
 
     private var requestQueue: RequestQueue? = null
     private var stringRequest: StringRequest? = null
@@ -53,6 +71,7 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private var tglPick: DatePicker? = null
     private var txtCir: MaterialEditText? = null
 
+    private var listCari = HashMap<String, String>()
     private var listJbar = ArrayList<HashMap<String, String>>()
     private var listLok = ArrayList<HashMap<String, String>>()
 
@@ -70,6 +89,7 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private var adapterKatBar: ArrayAdapter<*>? = null
     private var adapterRgLok: ArrayAdapter<*>? = null
 
+    private var btnImageAdd: ImageButton? = null
     private var btnConfirmEdit: Button? = null
 
     @SuppressLint("SetTextI18n")
@@ -77,6 +97,7 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_detail_my_pencarian)
 
+        requestStoragePermission()
         aQuery = AQuery(this)
 
         val toolbar: Toolbar? = findViewById(R.id.toolbarEdit)
@@ -98,6 +119,9 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
         idMyCari = intent.getStringExtra(config.CARI_ID)
 
         showMyPencarian()
+
+        btnImageAdd = findViewById(R.id.btnAddImage)
+        btnImageAdd?.setOnClickListener(this)
 
         kelBarSpin?.onItemSelectedListener = this
         katBarSpin?.onItemSelectedListener = this
@@ -152,15 +176,32 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
                             val result = jsonObject.getString("result")
                             val msg = jsonObject.getString("msg")
                             if (result.equals("true", ignoreCase = true)) {
-//                                val i = Intent(applicationContext, DetailMyPencarian::class.java)
-//                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                if (filePath != null) {
+                                    try {
+                                        //mendapatkan path photo di handphone
+                                        val path = getPath(filePath)
+                                        val uploadId = UUID.randomUUID().toString()
+
+                                        //Creating a multi part request
+                                        MultipartUploadRequest(
+                                            applicationContext,
+                                            uploadId,
+                                            config.URL_UPDATE_FOTO
+                                        )
+                                            .addFileToUpload(path, "image") //Adding file
+                                            .addParameter("name", idMyCari)
+                                            .setNotificationConfig(UploadNotificationConfig())
+                                            .setMaxRetries(2)
+                                            .startUpload() //Starting the upload
+                                    } catch (exc: Exception) {
+                                        pesan(applicationContext, "Gagal upload foto")
+                                    }
+                                }
                                 val i = Intent()
                                 i.putExtra(config.TAG_CARI_ID, idMyCari)
-                                overridePendingTransition(0,0)
-//                                startActivity(i)
-                                setResult(RESULT_OK,i)
-                                overridePendingTransition(0,0)
+                                overridePendingTransition(0, 0)
+                                setResult(RESULT_OK, i)
+                                overridePendingTransition(0, 0)
                                 pesan(applicationContext, msg)
                                 finish()
                             } else {
@@ -209,6 +250,9 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.btnAddImage -> {
+                showFileChooser()
+            }
             R.id.btnEditConfirm -> {
                 txtJdl?.error = null
                 txtCir?.error = null
@@ -234,9 +278,9 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
         when (parent.id) {
             R.id.kel_edit_spin -> {
                 val listKelBar = ArrayList<String>()
-                for (i in 0 until listJbar.size){
+                for (i in 0 until listJbar.size) {
                     val hashmap = listJbar[i]
-                    if (hashmap[config.TAG_KEL_BAR] == parent.selectedItem){
+                    if (hashmap[config.TAG_KEL_BAR] == parent.selectedItem) {
                         listKelBar.add(hashmap[config.TAG_KAT_BAR].toString())
                     }
                 }
@@ -248,12 +292,13 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 )
                 adapterKatBar?.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                 katBarSpin?.adapter = adapterKatBar
+                katBarSpin?.setSelection(0)
             }
 
             R.id.kat_edit_spin -> {
-                for (i in 0 until listJbar.size){
+                for (i in 0 until listJbar.size) {
                     val hashmap = listJbar[i]
-                    if (hashmap[config.TAG_KEL_BAR] == parentKelBar && hashmap[config.TAG_KAT_BAR] == parent.selectedItem){
+                    if (hashmap[config.TAG_KEL_BAR] == parentKelBar && hashmap[config.TAG_KAT_BAR] == parent.selectedItem) {
                         parentKatBar = hashmap[config.TAG_ID_JBAR].toString()
                     }
                 }
@@ -261,9 +306,9 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
             R.id.gd_edit_spin -> {
                 val listRgLok = ArrayList<String>()
-                for (i in 0 until listLok.size){
+                for (i in 0 until listLok.size) {
                     val hashmap = listLok[i]
-                    if (hashmap[config.TAG_GD_LOK] == parent.selectedItem){
+                    if (hashmap[config.TAG_GD_LOK] == parent.selectedItem) {
                         listRgLok.add(hashmap[config.TAG_RG_LOK].toString())
                     }
                 }
@@ -275,12 +320,13 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
                 )
                 adapterRgLok?.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
                 rgLokSpin?.adapter = adapterRgLok
+                rgLokSpin?.setSelection(0)
             }
 
             R.id.rg_edit_spin -> {
-                for (i in 0 until listLok.size){
+                for (i in 0 until listLok.size) {
                     val hashmap = listLok[i]
-                    if (hashmap[config.TAG_GD_LOK] == parentGdLok && hashmap[config.TAG_RG_LOK] == parent.selectedItem){
+                    if (hashmap[config.TAG_GD_LOK] == parentGdLok && hashmap[config.TAG_RG_LOK] == parent.selectedItem) {
                         parentRgLok = hashmap[config.TAG_ID_LOK].toString()
                     }
                 }
@@ -294,6 +340,20 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
+    }
+
+    //handling the image chooser activity result
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            filePath = data.data
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
+                imgFoto?.setImageBitmap(bitmap)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     // Fungdi untuk menampilkan isian detail pencarian
@@ -312,10 +372,15 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
                         txtCir?.setText(json.getString(config.TAG_CARI_CIRI))
                         imgFoto?.let {
                             Glide.with(applicationContext)
-                                .load(config.URL_IMG_LOC + json.getString(config.TAG_CARI_FOTO))
+                                .load(config.URL_IMG_LOC_CARI + json.getString(config.TAG_CARI_FOTO))
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(it)
                         }
+                        listCari[config.TAG_KEL_BAR] = json.getString(config.TAG_KEL_BAR)
+                        listCari[config.TAG_KAT_BAR] = json.getString(config.TAG_KAT_BAR)
+                        listCari[config.TAG_CARI_GD] = json.getString(config.TAG_CARI_GD)
+                        listCari[config.TAG_CARI_RG] = json.getString(config.TAG_CARI_RG)
+                        listCari[config.TAG_CARI_WKT] = json.getString(config.TAG_CARI_WKT)
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -391,6 +456,10 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
         wktSpin = findViewById(R.id.wkt_edit_spin)
         tglPick = findViewById(R.id.tgl_edit)
         txtCir = findViewById(R.id.cir_edit)
+
+        kelBarSpin?.setSelection(5)
+        gdLokSpin?.setSelection(5)
+        wktSpin?.setSelection(5)
     }
 
     // Fungsi untuk menampilkan pesan toast
@@ -402,5 +471,79 @@ class EditDetailMyPencarian : AppCompatActivity(), AdapterView.OnItemSelectedLis
     private fun isEmpty(editText: MaterialEditText?): Boolean {
         // Jika banyak huruf lebih dari 0
         return editText?.text.toString().trim { it <= ' ' }.isEmpty()
+    }
+
+    //Requesting permission
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) return
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            STORAGE_PERMISSION_CODE
+        )
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(
+                    this,
+                    "Permission granted now you can read the storage",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun showFileChooser() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+    }
+
+    //method to get the file path from uri
+    private fun getPath(uri: Uri?): String {
+        var cursor = contentResolver.query(uri!!, null, null, null, null)
+        cursor!!.moveToFirst()
+        var documentId = cursor.getString(0)
+        documentId = documentId.substring(documentId.lastIndexOf(":") + 1)
+        cursor.close()
+        cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            null, MediaStore.Images.Media._ID + " = ? ", arrayOf(documentId), null
+        )
+        cursor!!.moveToFirst()
+        val path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA))
+        cursor.close()
+        return path
     }
 }

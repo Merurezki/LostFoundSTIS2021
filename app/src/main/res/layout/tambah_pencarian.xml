@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ZZZZZZZZZZZ"
+    tools:context=".TambahPencarian"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -34,243 +34,315 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp" >
+            android:padding="16dp" >
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <ImageView
-                    android:id="@+id/fbr_add"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    tools:ignore="ContentDescription"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="25dp"
-                    android:src="@mipmap/ic_photo"
-                    tools:srcCompat="@tools:sample/avatars" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
 
-                <ImageButton
-                    android:id="@+id/btnAddImage"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toEndOf="@id/fbr_add"
-                    android:outlineAmbientShadowColor="@color/warnaNavigation"
-                    android:elevation="30dp"
-                    android:background="@drawable/custombtn1"
-                    app:srcCompat="@android:drawable/ic_menu_add"
-                    tools:targetApi="p" />
+                    <ImageView
+                        android:id="@+id/fbr_add"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="25dp"
+                        android:src="@mipmap/ic_photo"
+                        tools:ignore="ContentDescription"
+                        tools:srcCompat="@tools:sample/avatars" />
 
-            </RelativeLayout>
+                    <ImageButton
+                        android:id="@+id/btnAddImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toEndOf="@id/fbr_add"
+                        android:background="@drawable/custombtn1"
+                        android:elevation="30dp"
+                        android:outlineAmbientShadowColor="@color/warnaNavigation"
+                        app:srcCompat="@android:drawable/ic_menu_add"
+                        tools:ignore="ContentDescription"
+                        tools:targetApi="p" />
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/jdl_add"
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="16dp"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                android:maxLength="50"
-                android:text="@string/judul_pencarian" />
+                android:layout_height="wrap_content" >
 
-            <LinearLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/judul_pencarian"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText,InefficientWeight" />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/jdl_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:maxLength="50"
+                        android:textAlignment="center"
+                        android:textSize="14sp"
+                        app:met_baseColor="#2e8ece"
+                        app:met_errorColor="#f22a37"
+                        app:met_floatingLabel="highlight"
+                        app:met_primaryColor="#fc1e94" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content" >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Kelompok Barang"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Kategori Barang"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-            <LinearLayout
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Kelompok Barang"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            tools:ignore="HardcodedText" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Kategori Barang"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/kel_add_spin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:entries="@array/list_kelompok_barang" />
+
+                        <Spinner
+                            android:id="@+id/kat_add_spin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content" >
 
-                <Spinner
-                    android:id="@+id/kel_add_spin"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:entries="@array/list_kelompok_barang"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/kat_add_spin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Lokasi Gedung"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            tools:ignore="HardcodedText" />
 
-            <LinearLayout
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:text="Lokasi Ruang"
+                            android:textAlignment="center"
+                            android:textSize="12sp"
+                            tools:ignore="HardcodedText" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/gd_add_spin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1"
+                            android:entries="@array/list_gedung_kampus" />
+
+                        <Spinner
+                            android:id="@+id/rg_add_spin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content" >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Lokasi Gedung"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Lokasi Ruang"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Waktu Hilang"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText" />
 
-            <LinearLayout
+                    <Spinner
+                        android:id="@+id/wkt_add_spin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:entries="@array/list_sesi" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content" >
 
-                <Spinner
-                    android:id="@+id/gd_add_spin"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:entries="@array/list_gedung_kampus"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/rg_add_spin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Tanggal Hilang"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText" />
 
-            </LinearLayout>
+                    <DatePicker
+                        android:id="@+id/tgl_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner"
+                        android:spinnersShown="true"
+                        tools:targetApi="lollipop" />
 
-            <LinearLayout
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content" >
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Waktu Hilang"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/wkt_add_spin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:entries="@array/list_sesi"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_weight="1"
+                        android:text="Ciri Barang Hilang"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        tools:ignore="HardcodedText,InefficientWeight" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:text="Tanggal Hilang"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText" />
-
-                <DatePicker
-                    android:id="@+id/tgl_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner"
-                    android:spinnersShown="true"
-                    tools:targetApi="lollipop" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp" >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:text="Ciri Barang Hilang"
-                    android:textAlignment="center"
-                    android:textSize="12sp"
-                    tools:ignore="HardcodedText,InefficientWeight" />
-
-                <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/cir_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginHorizontal="5dp"
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                        android:id="@+id/cir_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="5dp"
+                        android:textAlignment="center"
+                        android:textSize="12sp"
+                        app:met_baseColor="#2e8ece"
+                        app:met_errorColor="#f22a37"
+                        app:met_floatingLabel="highlight"
+                        app:met_primaryColor="#fc1e94" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/btnAddConfirm"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="5dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:background="#dde32d"
                 android:text="Tambah Pencarian"
                 tools:ignore="HardcodedText,InefficientWeight" />

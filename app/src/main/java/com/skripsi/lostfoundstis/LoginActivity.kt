@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         // cek kebaradan teks
         when {
             isEmpty(logtxtUserId) -> {
-                logtxtUserId?.error = "Email masih kosong"
+                logtxtUserId?.error = "NIM / NIP masih kosong"
                 logtxtUserId?.requestFocus()
             }
             isEmpty(logtxtPassword) -> {
@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                                     val jsonObject = JSONObject(objecT)
                                     val result = jsonObject.getString("result")
                                     val msg = jsonObject.getString("msg")
+                                    val code = jsonObject.getString("code")
                                     if (result.equals("true", ignoreCase = true)) {
                                         sessionManager?.createSession(param["id_user"].toString())
 
@@ -96,6 +97,16 @@ class LoginActivity : AppCompatActivity() {
                                         pesan(context, msg)
                                         finish()
                                     } else {
+                                        when (code) {
+                                            "1" -> {
+                                                logtxtUserId?.error = "NIM / NIP anda salah"
+                                                logtxtUserId?.requestFocus()
+                                            }
+                                            "2" -> {
+                                                logtxtPassword?.error = "Password anda salah"
+                                                logtxtPassword?.requestFocus()
+                                            }
+                                        }
                                         pesan(context, msg)
                                     }
                                 } catch (e: JSONException) {

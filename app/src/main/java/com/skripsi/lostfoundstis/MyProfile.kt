@@ -53,7 +53,7 @@ class MyProfile : AppCompatActivity(), View.OnClickListener {
         if(ab != null){
             ab.setDisplayHomeAsUpEnabled(true)
         } else {
-            throw NullPointerException("Ada Kesalahan")
+            throw NullPointerException("Ada kesalahan")
         }
 
         setupView()
@@ -89,7 +89,7 @@ class MyProfile : AppCompatActivity(), View.OnClickListener {
                         try {
                             Toast.makeText(
                                 this,
-                                "Nomor Telepon Berhasil Diganti",
+                                "Nomor telepon berhasil diganti",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } catch (e: JSONException) {

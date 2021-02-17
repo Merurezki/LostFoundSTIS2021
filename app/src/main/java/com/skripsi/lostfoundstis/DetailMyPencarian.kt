@@ -115,7 +115,7 @@ class DetailMyPencarian : AppCompatActivity(), View.OnClickListener {
                         txtCir?.text = json.getString(config.TAG_CARI_CIRI)
                         imgFoto?.let {
                             Glide.with(applicationContext)
-                                .load(config.URL_IMG_LOC + json.getString(config.TAG_CARI_FOTO))
+                                .load(config.URL_IMG_LOC_CARI + json.getString(config.TAG_CARI_FOTO))
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(it)
                         }

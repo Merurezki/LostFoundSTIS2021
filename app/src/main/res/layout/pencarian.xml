@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:theme="@style/AppTheme" />
+        android:theme="@style/BlueTheme" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCari"

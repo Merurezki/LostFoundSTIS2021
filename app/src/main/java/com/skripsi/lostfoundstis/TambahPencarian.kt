@@ -236,6 +236,7 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         alertDialog?.show()
     }
 
+    // fungsi ketika tombol tambah pencarian diklik
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btnAddImage -> {
@@ -262,7 +263,7 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         }
     }
 
-    // Fungsi untuk mendapatkan data dari spinner
+    // fungsi untuk mendapatkan data dari spinner
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent.id) {
             R.id.kel_add_spin -> {
@@ -329,7 +330,7 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
 
     }
 
-    //handling the image chooser activity result
+    // mengambil data dan menampilkan foto yang dipilih
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
@@ -343,7 +344,7 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         }
     }
 
-    // Fungsi untuk mendapatkan data spinner jenis barang
+    // fungsi untuk mendapatkan data spinner jenis barang
     private fun daftarJbar(){
         requestQueueJbar = Volley.newRequestQueue(this)
         listJbar = ArrayList()
@@ -370,9 +371,9 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         requestQueueJbar?.add(stringRequestJbar)
     }
 
-    // Fungsi untuk mendapatkan data spinner lokasi kampus
+    // fungsi untuk mendapatkan data spinner lokasi kampus
     private fun daftarLok(){
-        // Mendapatkan data spinner lokasi kampus
+        // mendapatkan data spinner lokasi kampus
         requestQueueLok = Volley.newRequestQueue(this)
         listLok = ArrayList()
         stringRequestLok = StringRequest(
@@ -398,7 +399,7 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         requestQueueLok?.add(stringRequestLok)
     }
 
-    // Fungsi untuk mendapatkan view dari layout
+    // fungsi untuk mendapatkan view dari layout
     private fun setupView(){
         imgFoto = findViewById(R.id.fbr_add)
         txtJdl = findViewById(R.id.jdl_add)
@@ -416,13 +417,13 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         Toast.makeText(c, msg, Toast.LENGTH_LONG).show()
     }
 
-    // Fungsi untuk mengecek apakah isian kosong
+    // fungsi untuk mengecek apakah isian kosong
     private fun isEmpty(editText: MaterialEditText?): Boolean {
-        // Jika banyak huruf lebih dari 0
+        // jika banyak huruf lebih dari 0
         return editText?.text.toString().trim { it <= ' ' }.isEmpty()
     }
 
-    //Requesting permission
+    // fungsi untuk request permission
     private fun requestStoragePermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -446,40 +447,41 @@ class TambahPencarian : AppCompatActivity(), AdapterView.OnItemSelectedListener,
         )
     }
 
-    //This method will be called when the user will tap on allow or deny
+    // fungsi ini akan terpanggil ketika user ingin memilih untuk mengizinkan permission atau tidak
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray
     ) {
 
-        //Checking the request code of our request
+        // mengecek request code untuk request yang dijalankan
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
-            //If permission is granted
+            // mengecek apakah permission diizinkan
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
+                // menampilkan toast jika permission diizinkan
                 Toast.makeText(
                     this,
                     "Permission granted now you can read the storage",
                     Toast.LENGTH_LONG
                 ).show()
             } else {
-                //Displaying another toast if permission is not granted
+                // menampilkan toast jika permission tidak diizinkan
                 Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG)
                     .show()
             }
         }
     }
 
+    // fungsi untuk membuka galeri foto
     private fun showFileChooser() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
+        startActivityForResult(Intent.createChooser(intent, "Pilih Foto"), PICK_IMAGE_REQUEST)
     }
 
-    //method to get the file path from uri
+    // fungsi untuk mendapatkan path file
     private fun getPath(uri: Uri?): String {
         var cursor = contentResolver.query(uri!!, null, null, null, null)
         cursor!!.moveToFirst()

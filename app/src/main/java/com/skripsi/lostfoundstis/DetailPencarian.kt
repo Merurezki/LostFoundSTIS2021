@@ -28,6 +28,7 @@ class DetailPencarian : AppCompatActivity() {
     private var idCari: String? = null
 
     private var imgFoto: ImageView? = null
+    private var txtUser: TextView? = null
     private var txtJdl: TextView? = null
     private var txtJbr: TextView? = null
     private var txtLok: TextView? = null
@@ -69,6 +70,9 @@ class DetailPencarian : AppCompatActivity() {
                     val jsonArray = jsonObject.getJSONArray(config.TAG_CARI_JSON_ARRAY)
                     for (a in 0 until jsonArray.length()) {
                         val json = jsonArray.getJSONObject(a)
+                        txtUser?.text =
+                            "oleh : " + json.getString(config.TAG_NAMA_USER) + " (" +
+                                json.getString(config.TAG_CARI_ID_USER) + ")"
                         txtJdl?.text = json.getString(config.TAG_CARI_JDL)
                         txtJbr?.text =
                             json.getString(config.TAG_CARI_KEL) + ", " + json.getString(
@@ -81,7 +85,7 @@ class DetailPencarian : AppCompatActivity() {
                         txtCir?.text = json.getString(config.TAG_CARI_CIRI)
                         imgFoto?.let {
                             Glide.with(applicationContext)
-                                .load(config.URL_IMG_LOC + json.getString(config.TAG_CARI_FOTO))
+                                .load(config.URL_IMG_LOC_CARI + json.getString(config.TAG_CARI_FOTO))
                                 .placeholder(R.mipmap.ic_launcher)
                                 .into(it)
                         }
@@ -96,6 +100,7 @@ class DetailPencarian : AppCompatActivity() {
 
     private fun setuView(){
         imgFoto = findViewById(R.id.fbr_dcari)
+        txtUser = findViewById(R.id.pencari)
         txtJdl = findViewById(R.id.jdl_dcari)
         txtJbr = findViewById(R.id.jbr_dcari)
         txtLok = findViewById(R.id.lok_dcari)

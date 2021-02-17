@@ -39,19 +39,45 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp" >
 
-            <ImageView
-                android:id="@+id/fbr_edit"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="ContentDescription"
-                tools:srcCompat="@tools:sample/avatars" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/fbr_edit"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    tools:ignore="ContentDescription"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="25dp"
+                    android:src="@mipmap/ic_photo"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageButton
+                    android:id="@+id/btnAddImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@id/fbr_edit"
+                    android:outlineAmbientShadowColor="@color/warnaNavigation"
+                    android:elevation="30dp"
+                    android:background="@drawable/custombtn1"
+                    app:srcCompat="@android:drawable/ic_menu_add"
+                    tools:targetApi="p"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/jdl_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                app:met_baseColor="#2e8ece"
+                app:met_primaryColor="#fc1e94"
+                app:met_errorColor="#f22a37"
+                app:met_floatingLabel="highlight"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="10dp"
                 android:textAlignment="center"
@@ -237,6 +263,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    app:met_baseColor="#2e8ece"
+                    app:met_primaryColor="#fc1e94"
+                    app:met_errorColor="#f22a37"
+                    app:met_floatingLabel="highlight"
                     android:layout_marginHorizontal="5dp"
                     android:textAlignment="center"
                     android:textSize="12sp" />
