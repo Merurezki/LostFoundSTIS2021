@@ -20,7 +20,7 @@
     <string name="jenis_barang">Jenis Barang</string>
     <string name="lokasi_hilang">Lokasi Hilang</string>
     <string name="waktu_hilang">Waktu Hilang</string>
-    <string name="cir_bar">Ciri Barang Hilang</string>
+    <string name="cir_bar">Ciri Barang</string>
 
     <string-array name="list_kelompok_barang">
         <item>Alat Tulis</item>
@@ -47,7 +47,7 @@
         <item>ISHOMA</item>
         <item>Sesi 3</item>
         <item>Sesi 4</item>
-        <item>Sesi Malam</item>
+        <item>Malam</item>
     </string-array>
 
 </resources>
